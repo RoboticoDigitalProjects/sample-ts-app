@@ -1,0 +1,24 @@
+# Copy to RoboticoDigitalProjects/sample-ts-app/.github/workflows/oidc-check.yml (temporary; removed in WP 4.1)
+name: oidc-check
+on: workflow_dispatch
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  with-env:
+    runs-on: ubuntu-24.04
+    environment: sit
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::533232337439:role/iris-sit-deployer
+          aws-region: ap-south-1
+      - run: aws sts get-caller-identity
+  without-env:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::533232337439:role/iris-sit-deployer
+          aws-region: ap-south-1
+      - run: aws sts get-caller-identity
